@@ -10,16 +10,11 @@ import (
 )
 
 const (
-	// AuthURL is the URL to Spotify Accounts Service's OAuth2 endpoint.
-	AuthURL = "https://accounts.spotify.com/authorize"
-	// TokenURL is the URL to the Spotify Accounts Service's OAuth2
-	// token endpoint.
+	AuthURL  = "https://accounts.spotify.com/authorize"
 	TokenURL = "https://accounts.spotify.com/api/token"
 )
 
 const (
-	// ScopeUserReadPrivate seeks read access to a user's
-	// subsription details (type of user account).
 	ScopeUserReadPrivate = "user-read-private"
 )
 
@@ -29,8 +24,6 @@ type Authenticator struct {
 }
 
 func Authorize(redirectURL string, scopes ...string) Authenticator {
-	// ini comment
-	// test comment
 	cfg := &oauth2.Config{
 		ClientID:     readEnvVariable("spotify_id"),
 		ClientSecret: readEnvVariable("spotify_secret"),
@@ -52,9 +45,6 @@ func Authorize(redirectURL string, scopes ...string) Authenticator {
 	}
 }
 
-// Token pulls an authorization code from an HTTP request and attempts to exchange
-// it for an access token.  The standard use case is to call Token from the handler
-// that handles requests to your application's redirect URL.
 func (a Authenticator) Token(r *http.Request) (*oauth2.Token, error) {
 	values := r.URL.Query()
 	if e := values.Get("error"); e != "" {
