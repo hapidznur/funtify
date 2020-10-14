@@ -10,19 +10,24 @@ import (
 )
 
 const (
-	AuthURL  = "https://accounts.spotify.com/authorize"
+	// AuthURL is
+	AuthURL = "https://accounts.spotify.com/authorize"
+	// TokenURL is
 	TokenURL = "https://accounts.spotify.com/api/token"
 )
 
 const (
+	// ScopeUserReadPrivate is
 	ScopeUserReadPrivate = "user-read-private"
 )
 
+// Authenticator is
 type Authenticator struct {
 	config  *oauth2.Config
 	context context.Context
 }
 
+// Authorize is
 func Authorize(redirectURL string, scopes ...string) Authenticator {
 	cfg := &oauth2.Config{
 		ClientID:     readEnvVariable("spotify_id"),
@@ -45,6 +50,7 @@ func Authorize(redirectURL string, scopes ...string) Authenticator {
 	}
 }
 
+// Token is
 func (a Authenticator) Token(r *http.Request) (*oauth2.Token, error) {
 	values := r.URL.Query()
 	if e := values.Get("error"); e != "" {
