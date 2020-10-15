@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"io"
 	"net/http"
 	"net/http/httptest"
@@ -69,11 +68,15 @@ const currentUser = `{
 
 func TestUserCurrent(t *testing.T) {
 	server := testServer(http.StatusOK, strings.NewReader(currentUser))
-	fmt.Print(server)
 	defer server.Close()
 
 	client := testClient(server)
-	userID := "username"
-	client.CurrentUser(userID)
-
+	me, errr := client.CurrentUser()
+	if errr != nil {
+		t.Error(errr)
+		return
+	}
+	if me.Product != "premium" {
+		t.Error("Received incorrect response")
+	}
 }
