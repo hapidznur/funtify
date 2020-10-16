@@ -77,6 +77,6 @@ func TestUserCurrent(t *testing.T) {
 		return
 	}
 	if me.Product != "premium" {
-		t.Error("Received incorrect response")
+		t.Errorf("got %s, want %s", me.Product, "premium")
 	}
 }
