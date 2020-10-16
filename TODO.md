@@ -1,10 +1,12 @@
 ## TODO
-[ ] CurrentUserData
+[X] CurrentUserData
 [ ] User Profile
 
 ## Task
-[ ] CurrentUserTest
-[ ] CurrentUserLogic
+[X] CurrentUserTest
+[X] CurrentUserLogic
+
+[ ] Separated Get logic
 
 [ ] User Profile Test
 [ ] User Profile logic

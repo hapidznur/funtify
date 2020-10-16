@@ -21,11 +21,17 @@ type Client struct {
 type User struct {
 	// DisplayedName
 	DisplayName  string            `json:"display_name"`
-	ExternalURLs map[string]string `json:"external_urls`
-	Followers    string            `json:"followers"`
-	Endpoint     string            `json:href`
+	ExternalURLs map[string]string `json:"external_urls"`
+	Followers    Followers         `json:"followers"`
+	Endpoint     string            `json:"href"`
 	ID           string            `json:"id"`
 	Images       []string          `json:"images"`
+}
+
+// Follower data
+type Followers struct {
+	Endpoint string `json:"href"`
+	Total    uint   `json:"total"`
 }
 
 // PrivateUser CurrentUser
@@ -43,30 +49,44 @@ type PrivateUser struct {
 func (client *Client) CurrentUser() (*PrivateUser, error) {
 	spotifyURL := client.baseURL + "me"
 	var result PrivateUser
-
-	req, err := http.NewRequest("GET", spotifyURL, nil)
-	if client.AcceptLanguage != "" {
-		req.Header.Set("Accept-Language", client.AcceptLanguage)
-	}
-
+	err := client.get(spotifyURL, &result)
 	if err != nil {
 		return nil, err
 	}
 
-	resp, err := client.http.Do(req)
+	return &result, nil
+}
+
+// Get function to spotify
+func (c *Client) get(url string, result interface{}) error {
+
+	req, err := http.NewRequest("GET", url, nil)
+	if c.AcceptLanguage != "" {
+		req.Header.Set("Accept-Language", c.AcceptLanguage)
+	}
+
 	if err != nil {
-		return nil, err
+		return err
+	}
+
+	resp, err := c.http.Do(req)
+	if err != nil {
+		return err
 	}
 
 	defer resp.Body.Close()
 
 	if resp.StatusCode == http.StatusNoContent {
-		return nil, err
+		return err
 	}
 	if resp.StatusCode != http.StatusOK {
 		fmt.Print(resp.StatusCode)
 	}
 
-	json.NewDecoder(resp.Body).Decode(&result)
-	return &result, nil
+	err = json.NewDecoder(resp.Body).Decode(&result)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
