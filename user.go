@@ -25,7 +25,6 @@ type User struct {
 	Followers    Followers         `json:"followers"`
 	Endpoint     string            `json:"href"`
 	ID           string            `json:"id"`
-	Images       []string          `json:"images"`
 }
 
 // Follower data
@@ -89,4 +88,14 @@ func (c *Client) get(url string, result interface{}) error {
 	}
 
 	return nil
+}
+
+func (c Client) UserProfile(userID string) (*User, error) {
+	var user User
+	spotifyURL := c.baseURL + "users/" + userID
+	err := c.get(spotifyURL, &user)
+	if err != nil {
+		return nil, err
+	}
+	return &user, nil
 }

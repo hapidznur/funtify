@@ -80,3 +80,19 @@ func TestUserCurrent(t *testing.T) {
 		t.Errorf("got %s, want %s", me.Product, "premium")
 	}
 }
+
+func TestUserProfile(t *testing.T) {
+	server := testServer(http.StatusOK, strings.NewReader(userResponse))
+
+	client := testClient(server)
+	userID := "Ronald Pompa"
+	profile, err := client.UserProfile(userID)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+
+	if profile.DisplayName != userID {
+		t.Errorf("got %s, want %s", profile.DisplayName, userID)
+	}
+}
