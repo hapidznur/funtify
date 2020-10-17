@@ -8,11 +8,11 @@ import (
 
 type BasePage struct {
 	Endpoint  string `json:"href"`
-	Limit     string `json:"limit"`
+	Limit     int    `json:"limit"`
 	Nextpoint string `json:"next"`
-	Offset    uint   `json:"offset"`
+	Offset    int    `json:"offset"`
 	Prevpoint string `json:"previous"`
-	Count     uint   `json:"total"`
+	Count     int    `json:"total"`
 }
 
 type Images struct {

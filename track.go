@@ -2,7 +2,7 @@ package main
 
 type Album struct {
 	AlbumType        string            `json:"album_type"`
-	Markets          string            `json:"available_markets"`
+	Markets          []string          `json:"available_markets"`
 	ExternalEndpoint map[string]string `json:"external_urls"`
 	Endpoint         string            `json:"href"`
 	ID               string            `json:"id"`
@@ -20,18 +20,18 @@ type Artist struct {
 
 type Tracks struct {
 	Album            Album             `json:"album"`
-	Artists          Artist            `json:"artists"`
-	AvalaibleMarket  map[string]string `json:"available_markets"`
-	DiscNumber       uint              `json:"disc_number"`
-	Duration         uint              `json:"duration_ms"`
+	Artists          []Artist          `json:"artists"`
+	AvalaibleMarket  []string          `json:"available_markets"`
+	DiscNumber       int               `json:"disc_number"`
+	Duration         int               `json:"duration_ms"`
 	Explisit         bool              `json:"explisit"`
 	ExternalIDs      map[string]string `json:"external_ids"`
 	ExternalEndpoint map[string]string `json:"external_url"`
 	Endpoint         string            `json:"href"`
 	Name             string            `json:"name"`
-	Popularity       string            `json:"popularity"`
+	Popularity       int               `json:"popularity"`
 	PreviewURL       string            `json:"preview_url"`
-	TrackNumber      uint              `json:"track_number"`
+	TrackNumber      int               `json:"track_number"`
 	Type             string            `json:"type"`
 	UniqueURI        string            `json:"uri"`
 }

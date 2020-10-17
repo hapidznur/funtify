@@ -43,13 +43,13 @@ type PrivateUser struct {
 }
 
 type ItemSavedTracks struct {
-	Added string   `json:"added_at"`
-	track []Tracks `json:"tracks"`
+	Added  string `json:"added_at"`
+	Tracks Tracks `json:"track"`
 }
 
 type SavedTracks struct {
 	BasePage
-	ItemSavedTracks
+	Items []ItemSavedTracks `json:"items"`
 }
 
 // CurrentUser to get
@@ -75,12 +75,12 @@ func (c *Client) UserProfile(userID string) (*User, error) {
 	return &user, nil
 }
 
-func (c *Client) CurrentUserTracks() error {
+func (c *Client) CurrentUserTracks() (*SavedTracks, error) {
 	spotifyURL := c.baseURL + "me/tracks"
 	var savedTracks SavedTracks
-	err := c.get(spotifyURL, savedTracks)
+	err := c.get(spotifyURL, &savedTracks)
 	if err != nil {
-		return err
+		return nil, err
 	}
-	return nil
+	return &savedTracks, nil
 }

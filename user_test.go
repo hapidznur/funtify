@@ -89,6 +89,7 @@ func TestUserProfile(t *testing.T) {
 	userID := "Ronald Pompa"
 	profile, err := client.UserProfile(userID)
 
+	assertError(t, err)
 	if profile.DisplayName != userID {
 		t.Errorf("got %s, want %s", profile.DisplayName, userID)
 	}
@@ -102,15 +103,19 @@ func TestCurrentUserTrack(t *testing.T) {
 	}
 	server := testServer(http.StatusOK, f)
 	client := testClient(server)
-	err := client.CurrentUserTracks()
+	track, err := client.CurrentUserTracks()
 	assertError(t, err)
-	if track.Endpoint != "https://api.spotify.com/v1/me/tracks?offset=0&limit=2" {
-		t.Errorf("got %s", track.Endpoint)
-	}
+	assertTrue(t, track.Endpoint, "https://api.spotify.com/v1/me/tracks?offset=0&limit=20")
 }
 
 func assertError(t *testing.T, err error) {
 	if err != nil {
 		t.Errorf("Error %s", err)
+	}
+}
+
+func assertTrue(t *testing.T, got string, want string) {
+	if got != want {
+		t.Errorf("got %s, want %s", got, want)
 	}
 }
