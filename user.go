@@ -1,8 +1,6 @@
 package main
 
 import (
-	"encoding/json"
-	"fmt"
 	"net/http"
 )
 
@@ -44,11 +42,21 @@ type PrivateUser struct {
 	Birthdate string `json:"birthdate"`
 }
 
+type ItemSavedTracks struct {
+	Added string   `json:"added_at"`
+	track []Tracks `json:"tracks"`
+}
+
+type SavedTracks struct {
+	BasePage
+	ItemSavedTracks
+}
+
 // CurrentUser to get
-func (client *Client) CurrentUser() (*PrivateUser, error) {
-	spotifyURL := client.baseURL + "me"
+func (c *Client) CurrentUser() (*PrivateUser, error) {
+	spotifyURL := c.baseURL + "me"
 	var result PrivateUser
-	err := client.get(spotifyURL, &result)
+	err := c.get(spotifyURL, &result)
 	if err != nil {
 		return nil, err
 	}
@@ -56,41 +64,8 @@ func (client *Client) CurrentUser() (*PrivateUser, error) {
 	return &result, nil
 }
 
-// Get function to spotify
-func (c *Client) get(url string, result interface{}) error {
-
-	req, err := http.NewRequest("GET", url, nil)
-	if c.AcceptLanguage != "" {
-		req.Header.Set("Accept-Language", c.AcceptLanguage)
-	}
-
-	if err != nil {
-		return err
-	}
-
-	resp, err := c.http.Do(req)
-	if err != nil {
-		return err
-	}
-
-	defer resp.Body.Close()
-
-	if resp.StatusCode == http.StatusNoContent {
-		return err
-	}
-	if resp.StatusCode != http.StatusOK {
-		fmt.Print(resp.StatusCode)
-	}
-
-	err = json.NewDecoder(resp.Body).Decode(&result)
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (c Client) UserProfile(userID string) (*User, error) {
+// UserProfile is
+func (c *Client) UserProfile(userID string) (*User, error) {
 	var user User
 	spotifyURL := c.baseURL + "users/" + userID
 	err := c.get(spotifyURL, &user)
@@ -98,4 +73,14 @@ func (c Client) UserProfile(userID string) (*User, error) {
 		return nil, err
 	}
 	return &user, nil
+}
+
+func (c *Client) CurrentUserTracks() error {
+	spotifyURL := c.baseURL + "me/tracks"
+	var savedTracks SavedTracks
+	err := c.get(spotifyURL, savedTracks)
+	if err != nil {
+		return err
+	}
+	return nil
 }

@@ -4,6 +4,7 @@ import (
 	"io"
 	"net/http"
 	"net/http/httptest"
+	"os"
 	"strings"
 	"testing"
 )
@@ -88,11 +89,28 @@ func TestUserProfile(t *testing.T) {
 	userID := "Ronald Pompa"
 	profile, err := client.UserProfile(userID)
 
-	if err != nil {
-		t.Errorf("Error %s", err)
-	}
-
 	if profile.DisplayName != userID {
 		t.Errorf("got %s, want %s", profile.DisplayName, userID)
+	}
+}
+
+func TestCurrentUserTrack(t *testing.T) {
+	filename := "tests_data/current_users_tracks.txt"
+	f, err := os.Open(filename)
+	if err != nil {
+		panic(err)
+	}
+	server := testServer(http.StatusOK, f)
+	client := testClient(server)
+	err := client.CurrentUserTracks()
+	assertError(t, err)
+	if track.Endpoint != "https://api.spotify.com/v1/me/tracks?offset=0&limit=2" {
+		t.Errorf("got %s", track.Endpoint)
+	}
+}
+
+func assertError(t *testing.T, err error) {
+	if err != nil {
+		t.Errorf("Error %s", err)
 	}
 }
