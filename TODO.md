@@ -12,6 +12,6 @@
 [X] User Profile logic
 
 [ ] Error Handler
-[ ] Liked Song current user
+[X] Liked Song current user
 [ ] Repeat Song current user
 [ ] httpserver
