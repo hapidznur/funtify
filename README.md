@@ -6,6 +6,7 @@ Purpose to learn consume API using golang.
 
 For detail explanation and step by step writing in my blog[2]
 
+This Funtify projects get your liked song and repeat song backend project. For frontend will launch soon. 
 
 [1]: https://www.github.com/zmb3/spotify
 [2]: https://hapidznur.github.io/categories#funtify

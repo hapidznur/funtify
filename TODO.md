@@ -1,12 +1,16 @@
 ## TODO
 [X] CurrentUserData
-[ ] User Profile
+[x] User Profile
 
 ## Task
 [X] CurrentUserTest
 [X] CurrentUserLogic
 
-[ ] Separated Get logic
+[x] Separated Get logic
 
-[ ] User Profile Test
-[ ] User Profile logic
+[X] User Profile Test
+[X] User Profile logic
+
+[ ] Error Handler
+[ ] Liked Song current user
+[ ] Repeat Song current user
