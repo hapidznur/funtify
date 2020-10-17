@@ -18,6 +18,14 @@ func testServer(code int, body io.Reader) *httptest.Server {
 	return server
 }
 
+func testServerFromFile(code int, filename string) *httptest.Server {
+	f, err := os.Open(filename)
+	if err != nil {
+		panic(err)
+	}
+	return testServer(code, f)
+}
+
 func testClient(server *httptest.Server) *Client {
 	client := &Client{
 		http:    http.DefaultClient,

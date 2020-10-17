@@ -13,5 +13,5 @@
 
 [ ] Error Handler
 [X] Liked Song current user
-[ ] Repeat Song current user
+[X] Repeat Song current user
 [ ] httpserver
