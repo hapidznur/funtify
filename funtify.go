@@ -6,6 +6,7 @@ import (
 	"net/http"
 )
 
+// BasePage is
 type BasePage struct {
 	Endpoint  string `json:"href"`
 	Limit     int    `json:"limit"`
@@ -15,6 +16,7 @@ type BasePage struct {
 	Count     int    `json:"total"`
 }
 
+// Images Struct
 type Images struct {
 	Height   int    `json:"height"`
 	Endpoint string `json:"href"`

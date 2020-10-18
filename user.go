@@ -25,7 +25,7 @@ type User struct {
 	ID           string            `json:"id"`
 }
 
-// Follower data
+// Followers data
 type Followers struct {
 	Endpoint string `json:"href"`
 	Total    uint   `json:"total"`
@@ -42,11 +42,13 @@ type PrivateUser struct {
 	Birthdate string `json:"birthdate"`
 }
 
+// ItemSavedTracks is
 type ItemSavedTracks struct {
 	Added  string `json:"added_at"`
 	Tracks Tracks `json:"track"`
 }
 
+// SavedTracks is
 type SavedTracks struct {
 	BasePage
 	Items []ItemSavedTracks `json:"items"`
@@ -75,6 +77,7 @@ func (c *Client) UserProfile(userID string) (*User, error) {
 	return &user, nil
 }
 
+// CurrentUserTracks is
 func (c *Client) CurrentUserTracks() (*SavedTracks, error) {
 	spotifyURL := c.baseURL + "me/tracks"
 	var savedTracks SavedTracks

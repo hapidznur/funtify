@@ -1,5 +1,6 @@
 package main
 
+// Album is
 type Album struct {
 	AlbumType        string            `json:"album_type"`
 	Markets          []string          `json:"available_markets"`
@@ -9,6 +10,7 @@ type Album struct {
 	Images           []Images          `json:"images"`
 }
 
+// Artist is
 type Artist struct {
 	ExternalEndpoint map[string]string `json:"external_urls"`
 	Endpoint         string            `json:"href"`
@@ -18,6 +20,7 @@ type Artist struct {
 	SpotifyURI       string            `json:"uri"`
 }
 
+// Tracks is
 type Tracks struct {
 	Album            Album             `json:"album"`
 	Artists          []Artist          `json:"artists"`
