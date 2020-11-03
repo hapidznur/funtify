@@ -6,11 +6,6 @@ import (
 	"net/http"
 )
 
-var (
-	redirectURL = readEnvVariable("redirect_url")
-	auth        = Authorize(redirectURL, ScopeUserReadPrivate)
-	state       = "superstring"
-)
 
 func main() {
 	http.HandleFunc("/callback/", checkAuth)

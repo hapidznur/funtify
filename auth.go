@@ -51,7 +51,7 @@ func Authorize(redirectURL string, scopes ...string) Authenticator {
 }
 
 // Token is
-func (a Authenticator) Token(r *http.Request) (*oauth2.Token, error) {
+func (a Authenticator) Token(state string, r *http.Request) (*oauth2.Token, error) {
 	values := r.URL.Query()
 	if e := values.Get("error"); e != "" {
 		return nil, errors.New("spotify: auth failed - " + e)
@@ -60,6 +60,9 @@ func (a Authenticator) Token(r *http.Request) (*oauth2.Token, error) {
 	if code == "" {
 		return nil, errors.New("spotify: didn't get access code")
 	}
-
+	actualState := values.Get("state")
+	if actualState != state {
+		return nil, errors.New("spotify: redirect state parameter doesn't match")
+	}
 	return a.config.Exchange(a.context, code)
 }
