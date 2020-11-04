@@ -6,7 +6,6 @@ import (
 	"net/http"
 )
 
-
 func main() {
 	http.HandleFunc("/callback/", checkAuth)
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
@@ -21,7 +20,7 @@ func main() {
 }
 
 func checkAuth(w http.ResponseWriter, r *http.Request) {
-	token, err := auth.Token(r)
+	token, err := auth.Token("123", r)
 	if err != nil {
 		http.Error(w, "Couldn't get token", http.StatusForbidden)
 		fmt.Printf("%q", err)

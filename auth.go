@@ -50,6 +50,23 @@ func Authorize(redirectURL string, scopes ...string) Authenticator {
 	}
 }
 
+// NewClient creates a Client that will use the specified access token for its API requests.
+func (a Authenticator) NewClient(token *oauth2.Token) Client {
+	client := a.config.Client(a.context, token)
+	return Client{
+		http:    client,
+		baseURL: baseAddress,
+	}
+}
+
+// NewClient is use for
+func NewClient(client *http.Client) Client {
+	return Client{
+		http:    client,
+		baseURL: baseAddress,
+	}
+}
+
 // Token is
 func (a Authenticator) Token(state string, r *http.Request) (*oauth2.Token, error) {
 	values := r.URL.Query()

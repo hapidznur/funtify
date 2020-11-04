@@ -9,20 +9,24 @@ import (
 var (
 	redirectURL = readEnvVariable("redirect_url")
 	auth        = Authorize(redirectURL, ScopeUserReadPrivate)
-	ch    = make(chan *Client)
+	ch          = make(chan *Client)
 	state       = "superstring"
 )
 
 // AuthUser for API get AuthUser from spotify
-func AuthUser() {
+func AuthUser() string {
 	http.HandleFunc("/callback", completeAuth)
 	// wait for auth to complete
 	client := <-ch
-	user,err := client.CurrentUser()
+	user, err := client.CurrentUser()
+	// go http.ListenAndServe(":3030", nil)
+
 	fmt.Print(err)
 	fmt.Print(user)
+	return "a"
 }
 
+// Authenticate for user auth
 func Authenticate(token string) string {
 	return "success"
 }
