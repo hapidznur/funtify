@@ -12,6 +12,14 @@ type Images struct {
 	Width    int    `json:"Width"`
 }
 
+// URI identifies an artist, album, track, or category.  For example,
+// spotify:track:6rqhFgbbKwnb9MLmUQDhG6
+type URI string
+
+// ID is a base-62 identifier for an artist, track, album, etc.
+// It can be found at the end of a spotify.URI.
+type ID string
+
 // Get Htpp function to spotify
 func (c *Client) get(url string, result interface{}) error {
 
