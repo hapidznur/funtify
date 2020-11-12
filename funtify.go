@@ -6,15 +6,6 @@ import (
 	"net/http"
 )
 
-type BasePage struct {
-	Endpoint  string `json:"href"`
-	Limit     int    `json:"limit"`
-	Nextpoint string `json:"next"`
-	Offset    int    `json:"offset"`
-	Prevpoint string `json:"previous"`
-	Count     int    `json:"total"`
-}
-
 type Images struct {
 	Height   int    `json:"height"`
 	Endpoint string `json:"href"`
