@@ -12,10 +12,10 @@ func TestFindArtist(t *testing.T) {
 	artist, err := client.GetArtist(ID("0TnOYISbd1XYRBk9myaseg"))
 
 	if err != nil {
-		t.Fata(err)
+		t.Fatal(err)
 	}
 
-	if followers := artist.Followers.Count; followers != 2265279 {
+	if followers := artist.Followers.Total; followers != 2265279 {
 		t.Errorf("got %d followers, want 226579\n", followers)
 	}
 
