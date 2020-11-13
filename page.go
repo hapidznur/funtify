@@ -8,3 +8,8 @@ type BasePage struct {
 	Prevpoint string `json:"previous"`
 	Count     int    `json:"total"`
 }
+
+type AlbumPage struct {
+	BasePage
+	Albums []Album `json:"items"`
+}

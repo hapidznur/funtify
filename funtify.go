@@ -20,6 +20,18 @@ type URI string
 // It can be found at the end of a spotify.URI.
 type ID string
 
+const (
+	// DateLayout can be used with time.Parse to create time.Time values
+	// from Spotify date strings.  For example, PrivateUser.Birthdate
+	// uses this format.
+	DateLayout = "2006-01-02"
+	// TimestampLayout can be used with time.Parse to create time.Time
+	// values from SpotifyTimestamp strings.  It is an ISO 8601 UTC timestamp
+	// with a zero offset.  For example, PlaylistTrack's AddedAt field uses
+	// this format.
+	TimestampLayout = "2006-01-02T15:04:05Z"
+)
+
 // Get Htpp function to spotify
 func (c *Client) get(url string, result interface{}) error {
 
