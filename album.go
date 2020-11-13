@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"net/url"
 	"strconv"
 	"strings"
 	"time"
@@ -62,4 +63,32 @@ func (c *Client) GetAlbum(id ID) (*FullAlbum, error) {
 	}
 
 	return &fa, nil
+}
+
+func (c *Client) GetAlbumTracks(id ID, limit, offset int) (*TracksPage, error) {
+	return c.GetAlbumTracksOpt(id, -1, -1)
+}
+
+func (c *Client) GetAlbumTracksOpt(id ID, limit, offset int) (*TracksPage, error) {
+	spotifyURL := fmt.Sprintf("%salbums/%s/tracks", c.baseURL, id)
+
+	v := url.Values{}
+	if limit != -1 {
+		v.Set("limit", strconv.Itoa(limit))
+	}
+
+	if offset != -1 {
+		v.Set("offset", strconv.Itoa(offset))
+	}
+	optional := v.Encode()
+	if optional != "" {
+		spotifyURL = spotifyURL + "?" + optional
+	}
+	var tracks TracksPage
+	err := c.get(spotifyURL, &tracks)
+
+	if err != nil {
+		return nil, err
+	}
+	return &tracks, nil
 }
